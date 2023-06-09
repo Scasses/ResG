@@ -1,6 +1,4 @@
-import asyncio
-
-
+import functools
 
 class HighServicePumps:
     highServicePumps = {'HSP1': 13889,
@@ -15,13 +13,13 @@ class HighServicePumps:
                     'HSP10': 41667}
     
 
-    gas_pumps = {'HSP3': {'gpmHigh': 13889, 'gpmMed': 10417, 'gpmLow': 6994},
-             'HSP4': {'gpmHigh': 13889, 'gpmMed': 10417, 'gpmLow': 6994},
+    gas_pumps = {
+             'HSP3': {'gpmHigh': 13889, 'gpmMid': 10417, 'gpmLow': 6994},
+             'HSP4': {'gpmHigh': 13889, 'gpmMid': 10417, 'gpmLow': 6994},
              'HSP5': {'gpmHigh': 31250, 'gpmMid': 20833, 'gpmLow': 13899},
-             'HSP6': {'gpmHigh': 41667, 'gpmMid': 31250, 'gpmLow': 20833}}
+             'HSP6': {'gpmHigh': 41667, 'gpmMid': 31250, 'gpmLow': 20833}
+             }
     
-
-
 
 
 
@@ -29,8 +27,8 @@ target = 133651
 
 
 thirty_perc = target * .33
-thirty_perc_plus = thirty_perc + 1000
-thirty_perc_minus = thirty_perc - 1000
+thirty_perc_plus = int(thirty_perc) + 1000
+thirty_perc_minus = int(thirty_perc) - 1000
 
 
 target_pluss = target + 1500
@@ -45,8 +43,45 @@ percent_of_tptP = twenty_percent_target + 1500
 percent_of_tptM = twenty_percent_target - 1500
 
 
+def speed_sorter(pump_list):
+    pump_high = []
+    pump_medium = []
+    pump_low = []
+
+    for index,val in pump_list.items():
+        pump_high.append(val['gpmHigh'])
+        pump_medium.append(val['gpmMid'])
+        pump_low.append(val['gpmLow'])
+    return pump_high, pump_medium, pump_low
 
 
+
+
+def pump_speed(pump_dict):
+    pump_totals = []
+
+    pump_seperation = speed_sorter(pump_dict)
+    for index in pump_seperation:
+        gpm_high_totals = functools.reduce(lambda a,b: a+b, index)
+        pump_totals.append(gpm_high_totals)
+        if thirty_perc_minus < range(0, len(pump_totals)) <= thirty_perc_plus:
+            print('True')
+        else:
+            print('False') 
+        
+        
+        
+ 
+ 
+
+                
+
+        
+    
+            
+
+            
+pump_speed(HighServicePumps.gas_pumps)
 
 
 
@@ -106,18 +141,6 @@ def pump_selector(all_pumps):
     return final_pump
 
 
-
-
-# matching_items = []
-# target_plus = target + 1800
-# target_minus = target - 1800
-
-
-# target_percent = target * .33
-
-# target_percent_P = target_percent + 1000
-# target_percent_M = target_percent - 1000
-# # pumps_array = 0
 H_Pump = []
 M_Pump = []
 L_Pump = []
@@ -125,98 +148,3 @@ L_Pump = []
 
 
 
-
-
-def pump_check(dictionary):
-    pumps_groups_high = []
-    pumps_groups_mid = []
-    pumps_groups_low = []
-    pumps_name = []
-#     H_pump = []
-    # i = 0
-    for pumps, pumps_data in dictionary.items():
-        for gpm, gpm_data in pumps_data.items():
-            if gpm == 'gpmLow':
-                pumps_groups_low.append({pumps: gpm})
-                L_Pump.append(gpm_data)
-                low_totals = sum(L_Pump)
-                pumps_name.append(low_totals)
-                print(pumps_name, 'Pump list')
-                print(low_totals, "Low gpm totals")
-                if thirty_perc_minus > low_totals:
-                    print('Need more GPMs')
-                elif thirty_perc_plus < low_totals:
-                    L_Pump.sort(reverse=True, key=gpm_sorter)
-                    L_Pump.pop()
-                    new_sum = sum(L_Pump)
-                    print(new_sum,'New sum')
-                    if thirty_perc_minus < new_sum < thirty_perc_plus:
-                        print(new_sum,'Just right')
-                        
-                    
-                
-                    # print(pumps_name, 'True')
-            elif gpm == 'gpmMid':
-                pumps_groups_mid.append({pumps: gpm})
-                M_Pump.append(gpm_data)
-                mid_totals = sum(M_Pump)
-                print(mid_totals, 'Mid GPM totals')
-                
-            elif gpm == 'gpmHigh':
-                pumps_groups_high.append({pumps: gpm})
-                H_Pump.append(gpm_data)
-                # print(H_Pump, 'These are the H Pumps')
-                high_totals = sum(H_Pump)
-                print(high_totals, 'High GPM totals')
-                
-
-            else:
-                print('False!')
-
-
-
-pump_check(HighServicePumps.gas_pumps)
-
-
-
-
-
-# def pump_check(dictionary):
-#     pumps_groups_high = []
-#     pumps_groups_mid = []
-#     pumps_groups_low = []
-#     pumps_name = []
-# #     H_pump = []
-#     # i = 0
-#     for pumps, pumps_data in dictionary.items():
-#         for gpm, gpm_data in pumps_data.items():
-#             if gpm == 'gpmLow':
-#                 pumps_groups_low.append({pumps: gpm})
-#                 L_Pump.append(gpm_data)
-#                 low_totals = sum(L_Pump)
-#                 print(low_totals, "Low gpm totals")
-#                 if target_minus > low_totals < target_plus:
-#                     pumps_name.append(low_totals)
-#                     print(pumps_name, 'These are the low totals')
-                
-#                     # print(pumps_name, 'True')
-#             elif gpm == 'gpmMid':
-#                 pumps_groups_mid.append({pumps: gpm})
-#                 M_Pump.append(gpm_data)
-#                 mid_totals = sum(M_Pump)
-#                 print(mid_totals, 'Mid GPM totals')
-                
-#             elif gpm == 'gpmHigh':
-#                 pumps_groups_high.append({pumps: gpm})
-#                 H_Pump.append(gpm_data)
-#                 # print(H_Pump, 'These are the H Pumps')
-#                 high_totals = sum(H_Pump)
-#                 print(high_totals, 'High GPM totals')
-                
-
-#             else:
-#                 print('False!')
-
-
-
-# pump_check(HighServicePumps.gas_pumps)

@@ -20,37 +20,6 @@ class HighServicePumps:
 
 
 
-# def gas_pump_selector(dictionary):
-#     for pumps, gpm in dictionary.items():
-#         if isinstance(gpm, dict):
-#             new_dict = dict(gpm)
-#             pump_choice.update(new_dict)
-#             print(pump_choice, 'pumps choice')
-#     return pump_choice
-
-
-
-
-# gas_pump_list = gas_pump_selector(HighServicePumps.highServicePumps)
-
-
-# def pump_check(dictionary):
-#     pumps_groups_high = []
-#     pumps_groups_mid = []
-#     pumps_groups_low = []
-#     pumps_name = []
-
-
-#     print(dictionary.items(), 'Pump check dict')
-
-
-
-
-# pump_check(gas_pump_list)
-
-
-
-
 target = 133651
 
 # This is just a temporary number to test the reservoir compass function
@@ -146,86 +115,5 @@ M_Pump = []
 L_Pump = []
 
 
+pump_selector(HighServicePumps.highServicePumps)
 
-
-# def pump_check(dictionary):
-#     pumps_groups_high = []
-#     pumps_groups_mid = []
-#     pumps_groups_low = []
-#     pumps_name = []
-#     for pumps, gpm in dictionary.items():
-#         pumps_name.append(pumps)
-#         print(pumps_name)
-
-    # for pump_data, gpms in dictionary.items():
-    #     pumps_name.append(gpms)
-    #     print(pumps_name, 'This is pumps name')
-
-    # for pumps_data in dictionary.items():
-    #     print(pumps_data, 'This is pumps data')
-        # for gpm in pumps_data.items():
-        #     if gpm == 'gpmLow':
-        #         pumps_groups_low.append({pumps: gpm})
-        #         L_Pump.append(gpm)
-        #         low_totals = sum(L_Pump)
-        #         print(low_totals, "Low gpm totals")
-        #         if target_minus > low_totals < target_plus:
-        #             pumps_name.append(low_totals)
-        #             print(pumps_name, 'True')
-        #     elif gpm == 'gpmMid':
-        #         pumps_groups_mid.append({pumps: gpm})
-        #         M_Pump.append(gpm)
-        #         mid_totals = sum(M_Pump)
-        #         print(mid_totals, 'Mid GPM totals')
-        #     elif gpm == 'gpmHigh':
-        #         pumps_groups_high.append({pumps: gpm})
-        #         H_Pump.append(gpm)
-        #         print(H_Pump, 'These are the H Pumps')
-        #         high_totals = sum(H_Pump)
-        #         print(high_totals, 'High GPM totals')
-
-        #     else:
-        #         print('False!')
-
-
-
-def pump_check(dictionary):
-    pumps_groups_high = []
-    pumps_groups_mid = []
-    pumps_groups_low = []
-    pumps_name = []
-#     H_pump = []
-    # i = 0
-    for pumps, pumps_data in dictionary.items():
-        for gpm, gpm_data in pumps_data.items():
-            if gpm == 'gpmLow':
-                pumps_groups_low.append({pumps: gpm})
-                L_Pump.append(gpm_data)
-                low_totals = sum(L_Pump)
-                print(low_totals, "Low gpm totals")
-                if target_minus > low_totals < target_plus:
-                    pumps_name.append(low_totals)
-                    print(pumps_name, 'These are the low totals')
-                
-                    # print(pumps_name, 'True')
-            elif gpm == 'gpmMid':
-                pumps_groups_mid.append({pumps: gpm})
-                M_Pump.append(gpm_data)
-                mid_totals = sum(M_Pump)
-                print(mid_totals, 'Mid GPM totals')
-                
-            elif gpm == 'gpmHigh':
-                pumps_groups_high.append({pumps: gpm})
-                H_Pump.append(gpm_data)
-                # print(H_Pump, 'These are the H Pumps')
-                high_totals = sum(H_Pump)
-                print(high_totals, 'High GPM totals')
-                
-
-            else:
-                print('False!')
-
-
-
-pump_check(HighServicePumps.gas_pumps)
-# pump_selector(HighServicePumps.highServicePumps)
