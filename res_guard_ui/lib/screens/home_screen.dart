@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../global_variables/constants.dart';
 import '../widgets/calc_button.dart';
 
@@ -128,7 +127,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 child: Column(
-                  children: const <Widget>[Text('Current Reservoir')],
+                  children: <Widget>[
+                    const Text('Current Reservoir'),
+                    Container(
+
+                    ),
+
+
+
+
+                  ],
                 ),
               ),
               const SizedBox(
@@ -144,7 +152,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     const Text('Message Center'),
                     const SizedBox(
@@ -160,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const BoxDecoration(color: Colors.blueGrey),
                           child: Column(
                             mainAxisAlignment:
-                            MainAxisAlignment.spaceEvenly,
+                            MainAxisAlignment.end,
                             children: <Widget>[
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
