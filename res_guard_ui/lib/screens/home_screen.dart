@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:res_guard_ui/widgets/reservoirdisplay.dart';
 import '../global_variables/constants.dart';
 import '../widgets/calc_button.dart';
-
-
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -126,16 +125,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     BoxShadow(blurRadius: 25.0),
                   ],
                 ),
-                child: Column(
-                  children: <Widget>[
-                    const Text('Current Reservoir'),
-                    Container(
-
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: <Widget>[
+                        const Text('Current Reservoir'),
+                        Container(
+                          height: 100.0,
+                          width: 100.0,
+                          child: const ReservoirDisplay(
+                            feet: 20.0,
+                            maxFeet: 30.0,
+                            currentTrajectory: 24.0,
+                            forecastTrajectory: 25,
+                          ),
+                        ),
+                      ],
                     ),
-
-
-
-
                   ],
                 ),
               ),
@@ -165,10 +172,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           width: 500.0,
                           height: 300.0,
                           decoration:
-                          const BoxDecoration(color: Colors.blueGrey),
+                              const BoxDecoration(color: Colors.blueGrey),
                           child: Column(
-                            mainAxisAlignment:
-                            MainAxisAlignment.end,
+                            mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -183,10 +189,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                         filled: true,
                                         fillColor: Colors.white,
                                         border: UnderlineInputBorder(),
-                                        hintText:
-                                        'Type your message here...',
+                                        hintText: 'Type your message here...',
                                         hintStyle:
-                                        TextStyle(color: Colors.black),
+                                            TextStyle(color: Colors.black),
                                       ),
                                     ),
                                   ),
