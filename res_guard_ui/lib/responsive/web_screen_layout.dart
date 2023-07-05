@@ -49,7 +49,7 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
               color: _page == 1 ? Colors.red : Colors.black,
             ),
             label: 'Data Info',
-            backgroundColor: Colors.white,
+            backgroundColor: Colors.lightBlueAccent,
           ),
         ],
         onTap: navigationOnTapped,

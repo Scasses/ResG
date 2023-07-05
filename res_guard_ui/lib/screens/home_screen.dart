@@ -1,7 +1,11 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:res_guard_ui/widgets/reservoirdisplay.dart';
 import '../global_variables/constants.dart';
 import '../widgets/calc_button.dart';
+import 'package:res_guard_ui/api.dart';
+import 'package:res_guard_ui/api.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -11,6 +15,36 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final TextEditingController _controllerReservoir = TextEditingController();
+  String url = 'http://127.0.0.1:5000';
+  String? desResLevel;
+  dynamic data;
+  String output = 'Initial value';
+
+  // Future<dynamic> dataAcquire(String url, String input) async {
+  //   String opInput = await APICalls().fetchData(url, input);
+  //   print(desResLevel);
+  //   return opInput;
+  // }
+
+  Future<String> dataAcquire(String url, String input) async {
+    try {
+      String opInput = await APICalls().fetchData(url, input);
+      print(desResLevel);
+      return opInput ?? '';
+    } catch (error) {
+      print('An error occurred: $error');
+      return '';
+    }
+  }
+
+
+  @override
+  void dispose() {
+    _controllerReservoir.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,8 +107,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const <Widget>[
-                          Text('Discharge Pressure :',
-                              style: TextStyle(fontSize: 20)),
+                          Text(
+                            'Discharge Pressure :',
+                            style: TextStyle(fontSize: 20),
+                          ),
                           Text('68 psi', style: TextStyle(fontSize: 20))
                         ],
                       ),
@@ -125,20 +161,144 @@ class _HomeScreenState extends State<HomeScreen> {
                     BoxShadow(blurRadius: 25.0),
                   ],
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Column(
-                      children: <Widget>[
-                        const Text('Current Reservoir'),
+                child: Column(
+                  children: <Widget>[
+                    const Text('Current Reservoir'),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
                         Container(
-                          height: 100.0,
+                          height: 200.0,
                           width: 100.0,
                           child: const ReservoirDisplay(
                             feet: 20.0,
                             maxFeet: 30.0,
                             currentTrajectory: 24.0,
                             forecastTrajectory: 25,
+                          ),
+                        ),
+                        Container(
+                          width: 450.0,
+                          height: 300.0,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  const Text('Operator Input'),
+                                  // const SizedBox(
+                                  //   height: 10.0,
+                                  // ),
+                                  Container(
+                                    width: 400.0,
+                                    height: 250.0,
+                                    padding: const EdgeInsets.all(5.0),
+                                    decoration: const BoxDecoration(
+                                        color: Colors.blueGrey),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            Container(
+                                              height: 115.0,
+                                              width: 190.0,
+                                              color: Colors.blue,
+                                              child: Text(output),
+                                            ),
+                                            const SizedBox(
+                                              width: 10.0,
+                                            ),
+                                            SizedBox(
+                                              height: 155.0,
+                                              width: 190.0,
+                                              child: Column(
+                                                children: <Widget>[
+                                                  const Text(
+                                                    'Desired Reservoir Level',
+                                                    style: TextStyle(
+                                                        fontSize: 15.0,
+                                                        color: Colors.white),
+                                                  ),
+                                                  TextFormField(
+                                                    onChanged: (value) {
+                                                      desResLevel = value;
+                                                      print(desResLevel);
+                                                    },
+                                                    style: const TextStyle(
+                                                      color: Colors.black,
+                                                    ),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                      filled: true,
+                                                      fillColor: Colors.white,
+                                                      border:
+                                                          UnderlineInputBorder(),
+                                                      hintText:
+                                                          'Desired Reservoir Level',
+                                                      hintStyle: TextStyle(
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 15.0,
+                                                    child: Text(
+                                                        'Current Reservoir Level',
+                                                        style: TextStyle(
+                                                            fontSize: 15.0,
+                                                            color:
+                                                                Colors.white)),
+                                                  ),
+                                                  TextFormField(
+                                                    style: const TextStyle(
+                                                      color: Colors.black,
+                                                    ),
+                                                    decoration:
+                                                        const InputDecoration(
+                                                      filled: true,
+                                                      fillColor: Colors.white,
+                                                      border:
+                                                          UnderlineInputBorder(),
+                                                      hintText:
+                                                          'Current Reservoir Level',
+                                                      hintStyle: TextStyle(
+                                                          color: Colors.black),
+                                                    ),
+                                                  ),
+                                                  const SizedBox(
+                                                    height: 5.0,
+                                                  ),
+                                                  CalculateButton(
+                                                    color: Colors.blue,
+                                                    onPressed: () async {
+                                                      data = await dataAcquire(url, desResLevel!);
+                                                      setState(() {
+                                                        output = data['output'];
+                                                      });
+                                                      print(desResLevel);
+                                                    },
+                                                    width: 75.0,
+                                                    height: 30.0,
+                                                    text: 'Send',
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
                       ],
@@ -199,7 +359,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               CalculateButton(
                                 color: Colors.blue,
-                                onPressed: () {
+                                onPressed: () async {
                                   print('clicked');
                                 },
                                 width: 75.0,

@@ -10,5 +10,15 @@ const kAppTextStyle = TextStyle(fontSize: 20);
 
 List <Widget> infoScreen = [
 const HomeScreen(),
-  const DataInfo()
+  const DataInfo(),
 ];
+
+
+
+showSnackBar(String content, BuildContext context) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Text(content),
+    ),
+  );
+}
