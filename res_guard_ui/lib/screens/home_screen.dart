@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:res_guard_ui/widgets/reservoirdisplay.dart';
 import '../global_variables/constants.dart';
 import '../widgets/calc_button.dart';
-import 'package:res_guard_ui/api.dart';
+// import 'package:res_guard_ui/api.dart';
 import 'package:res_guard_ui/api.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,10 +16,18 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final TextEditingController _controllerReservoir = TextEditingController();
-  String url = 'http://127.0.0.1:5000';
+  String url = '';
   String? desResLevel;
-  dynamic data;
+  var data;
   String output = 'Initial value';
+  int numbers = 0;
+
+  fetchData(String url) async{
+      http.Response response = await http.get(Uri.parse(url));
+      var decoded = jsonDecode(response.body);
+      print(decoded);
+      return decoded;
+  }
 
   // Future<dynamic> dataAcquire(String url, String input) async {
   //   String opInput = await APICalls().fetchData(url, input);
@@ -27,16 +35,16 @@ class _HomeScreenState extends State<HomeScreen> {
   //   return opInput;
   // }
 
-  Future<String> dataAcquire(String url, String input) async {
-    try {
-      String opInput = await APICalls().fetchData(url, input);
-      print(desResLevel);
-      return opInput ?? '';
-    } catch (error) {
-      print('An error occurred: $error');
-      return '';
-    }
-  }
+  // Future<String> dataAcquire(String url, String input) async {
+  //   try {
+  //     String opInput = await APICalls().fetchData(url, input);
+  //     print(desResLevel);
+  //     return opInput ?? '';
+  //   } catch (error) {
+  //     print('An error occurred: $error');
+  //     return '';
+  //   }
+  // }
 
 
   @override
@@ -211,7 +219,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               height: 115.0,
                                               width: 190.0,
                                               color: Colors.blue,
-                                              child: Text(output),
+                                              child: Text('$numbers'),
                                             ),
                                             const SizedBox(
                                               width: 10.0,
@@ -228,9 +236,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                         color: Colors.white),
                                                   ),
                                                   TextFormField(
+                                                    // controller: _controllerReservoir,
                                                     onChanged: (value) {
-                                                      desResLevel = value;
-                                                      print(desResLevel);
+                                                      url = 'http://127.0.0.1:5000/coreCall?query=' + value.toString();
+                                                      print(url);
                                                     },
                                                     style: const TextStyle(
                                                       color: Colors.black,
@@ -278,11 +287,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   CalculateButton(
                                                     color: Colors.blue,
                                                     onPressed: () async {
-                                                      data = await dataAcquire(url, desResLevel!);
+                                                      data = await fetchData(url);
+                                                      output = data['output'];
+                                                       numbers = int.parse(output);
+                                                       print(numbers.runtimeType);
                                                       setState(() {
-                                                        output = data['output'];
+                                                        numbers;
                                                       });
-                                                      print(desResLevel);
                                                     },
                                                     width: 75.0,
                                                     height: 30.0,
