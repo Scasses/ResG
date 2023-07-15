@@ -11,7 +11,7 @@ class _DataInfoState extends State<DataInfo> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: const Text('Data Page', style: TextStyle(color: Colors.black)),
+      child: const Text('Data Page', style: TextStyle(color: Colors.white)),
     );
   }
 }

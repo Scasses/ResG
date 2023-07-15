@@ -29,7 +29,7 @@ class ReservoirDisplay extends StatelessWidget {
               maxHeight: maxFeet,
               currentTrajectory: currentTrajectory,
               forecastTrajectory: forecastTrajectory),
-          size: const Size(120, 200),
+          size: const Size(100, 200),
         ),
         const Positioned.fill(
           child: Align(

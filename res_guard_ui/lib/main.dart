@@ -17,7 +17,8 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Reservoir Guard',
       theme: ThemeData(
-          scaffoldBackgroundColor: Colors.blueGrey,
+        primaryColor: const Color(0xFF0A0E21),
+          scaffoldBackgroundColor: const Color(0xFF1F3B4D),
       ),
       home: const ResponsiveLayout(
         webScreenLayout: WebScreenLayout(),
