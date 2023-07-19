@@ -185,7 +185,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
-                                        children: const [Text('Raw Water GPM :')],
+                                        children: const [
+                                          Text('Raw Water GPM :')
+                                        ],
                                       ),
                                     ),
                                   ],
@@ -229,7 +231,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             children: <Widget>[
                               const Text(
                                 'Reservoir Data: ',
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(
+                                    fontSize: 20, color: Colors.white),
                               ),
                               const SizedBox(height: 20.0),
                               SizedBox(
@@ -316,7 +319,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                               Container(
                                                                 height: 110.0,
                                                                 width: 190.0,
-                                                                color: Colors.white,
+                                                                color: Colors
+                                                                    .white,
                                                                 child: Column(
                                                                   children: [
                                                                     Row(
@@ -332,17 +336,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       ],
                                                                     ),
                                                                     const SizedBox(
-                                                                        height: 3.0),
+                                                                        height:
+                                                                            3.0),
                                                                     const Divider(
                                                                         thickness:
                                                                             2.0,
                                                                         color: Colors
                                                                             .black,
-                                                                        height: 2.0,
-                                                                        indent: 0,
-                                                                        endIndent: 0),
+                                                                        height:
+                                                                            2.0,
+                                                                        indent:
+                                                                            0,
+                                                                        endIndent:
+                                                                            0),
                                                                     const SizedBox(
-                                                                        height: 3.0),
+                                                                        height:
+                                                                            3.0),
                                                                     Row(
                                                                       children: [
                                                                         const Text(
@@ -352,17 +361,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       ],
                                                                     ),
                                                                     const SizedBox(
-                                                                        height: 3.0),
+                                                                        height:
+                                                                            3.0),
                                                                     const Divider(
                                                                         thickness:
                                                                             2.0,
                                                                         color: Colors
                                                                             .black,
-                                                                        height: 2.0,
-                                                                        indent: 0,
-                                                                        endIndent: 0),
+                                                                        height:
+                                                                            2.0,
+                                                                        indent:
+                                                                            0,
+                                                                        endIndent:
+                                                                            0),
                                                                     const SizedBox(
-                                                                        height: 3.0),
+                                                                        height:
+                                                                            3.0),
                                                                     Row(
                                                                       children: [
                                                                         const Text(
@@ -372,17 +386,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       ],
                                                                     ),
                                                                     const SizedBox(
-                                                                        height: 3.0),
+                                                                        height:
+                                                                            3.0),
                                                                     const Divider(
                                                                         thickness:
                                                                             2.0,
                                                                         color: Colors
                                                                             .black,
-                                                                        height: 2.0,
-                                                                        indent: 0,
-                                                                        endIndent: 0),
+                                                                        height:
+                                                                            2.0,
+                                                                        indent:
+                                                                            0,
+                                                                        endIndent:
+                                                                            0),
                                                                     const SizedBox(
-                                                                        height: 3.0),
+                                                                        height:
+                                                                            3.0),
                                                                     Row(
                                                                       children: const [
                                                                         Text(
@@ -392,18 +411,36 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       ],
                                                                     ),
                                                                     const SizedBox(
-                                                                        height: 15.0)
+                                                                        height:
+                                                                            15.0)
                                                                   ],
                                                                 ),
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 10.0,
                                                               ),
                                                               Container(
-                                                                height: 20.0,
-                                                                width: 20.0,
-                                                                color: Colors.white,
-
+                                                                height: 130.0,
+                                                                width: 190.0,
+                                                                color: Colors
+                                                                    .white,
+                                                                child: Column(
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Row(
+                                                                      children: const <
+                                                                          Widget>[
+                                                                        Text(
+                                                                            'Reservoir Actions: '),
+                                                                      ],
+                                                                    ),
+                                                                    Padding(
+                                                                      padding: const EdgeInsets.all(8.0),
+                                                                      child: Text(
+                                                                          '$actionMessage'),
+                                                                    ),
+                                                                  ],
+                                                                ),
                                                               )
                                                             ],
                                                           ),
@@ -414,7 +451,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             height: 155.0,
                                                             width: 190.0,
                                                             child: Column(
-                                                              children: <Widget>[
+                                                              children: <
+                                                                  Widget>[
                                                                 const Text(
                                                                   'Desired Reservoir Level',
                                                                   style: TextStyle(
@@ -437,7 +475,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   ),
                                                                   decoration:
                                                                       const InputDecoration(
-                                                                    filled: true,
+                                                                    filled:
+                                                                        true,
                                                                     fillColor:
                                                                         Colors
                                                                             .white,
@@ -457,13 +496,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       style: TextStyle(
                                                                           fontSize:
                                                                               15.0,
-                                                                          color: Colors
-                                                                              .white)),
+                                                                          color:
+                                                                              Colors.white)),
                                                                 ),
                                                                 TextFormField(
                                                                   onChanged:
                                                                       (value2) {
-                                                                    urls = value2;
+                                                                    urls =
+                                                                        value2;
                                                                     print(urls);
                                                                   },
                                                                   style:
@@ -473,7 +513,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   ),
                                                                   decoration:
                                                                       const InputDecoration(
-                                                                    filled: true,
+                                                                    filled:
+                                                                        true,
                                                                     fillColor:
                                                                         Colors
                                                                             .white,
@@ -492,8 +533,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                   height: 5.0,
                                                                 ),
                                                                 CalculateButton(
-                                                                  color:
-                                                                      Colors.blue,
+                                                                  color: Colors
+                                                                      .blue,
                                                                   onPressed:
                                                                       () async {
                                                                     data =
@@ -502,13 +543,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           url,
                                                                           urls),
                                                                     );
-                                                                    targetGpm = data[
-                                                                        'target gpm'];
+                                                                    actionMessage =
+                                                                        data[
+                                                                            'reservoir message'];
+                                                                    targetGpm =
+                                                                        data[
+                                                                            'target gpm'];
                                                                     electricPumps =
                                                                         data[
                                                                             'electric pumps'];
-                                                                    // gasPumps = data[
-                                                                    //     'gas pumps'];
+                                                                    gasPumps = data[
+                                                                        'gas pumps'];
                                                                     // combined = data[
                                                                     //     'combined gpm'];
                                                                     gPMTarget =
@@ -523,12 +568,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       electricPumps
                                                                           .toString(),
                                                                     );
-                                                                    // gPumpsGPM =
-                                                                    //     double
-                                                                    //         .parse(
-                                                                    //   gasPumps
-                                                                    //       .toString(),
-                                                                    // );
+                                                                    gPumpsGPM =
+                                                                        double
+                                                                            .parse(
+                                                                      gasPumps
+                                                                          .toString(),
+                                                                    );
                                                                     // gasElectricCombo =
                                                                     //     double
                                                                     //         .parse(
@@ -548,9 +593,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     //         output.toString());
                                                                     // print(numbers
                                                                     //     .runtimeType);
-                                                                    setState(() {
+                                                                    setState(
+                                                                        () {
                                                                       targetGpm;
                                                                       ePumpsGPM;
+                                                                      gPumpsGPM;
+                                                                      actionMessage;
+
                                                                       // gPumpsGPM;
                                                                       // gasElectricCombo;
                                                                     });
