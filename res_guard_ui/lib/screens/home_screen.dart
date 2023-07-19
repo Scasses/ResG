@@ -23,10 +23,18 @@ class _HomeScreenState extends State<HomeScreen> {
   var data;
   String output = 'Initial value';
   double numbers = 0;
-  final messageController = TextEditingController();
+  String targetGpm = 'Awaiting value';
+  double gPMTarget = 0;
+  String electricPumps = 'Awaiting Electric pumps.';
+  double ePumpsGPM = 0;
+  String gasPumps = 'Awaiting Gas pumps.';
+  double gPumpsGPM = 0;
+  String combined = 'Total GPM required';
+  double gasElectricCombo = 0;
+  String actionMessage = 'Reservoir action pending...';
+  // final messageController = TextEditingController();
   String? messageText;
   var height = 40.0;
-
 
   fetchData(String url) async {
     http.Response response = await http.get(Uri.parse(url));
@@ -40,6 +48,12 @@ class _HomeScreenState extends State<HomeScreen> {
     print(combo);
     return combo;
   }
+
+  // urlCombine(String url1, String url2) {
+  //   String combo = 'http://127.0.0.1:5000/calculator?query=$url1&query2=$url2';
+  //   print(combo);
+  //   return combo;
+  // }
 
   // Future<dynamic> dataAcquire(String url, String input) async {
   //   String opInput = await APICalls().fetchData(url, input);
@@ -168,8 +182,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Column(
                                   children: [
                                     const Text('Raw Water Data'),
-                                    Row(
-                                      children: const [Text('Raw Water GPM :')],
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: const [Text('Raw Water GPM :')],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -184,10 +201,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: Column(
                                   children: [
                                     const Text('Finished Water Data'),
-                                    Row(
-                                      children: const [
-                                        Text('Finished Water GPM :'),
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Row(
+                                        children: const [
+                                          Text('Finished Water GPM :'),
+                                        ],
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -211,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'Reservoir Data: ',
                                 style: TextStyle(fontSize: 20),
                               ),
-                              const SizedBox(height: 50.0),
+                              const SizedBox(height: 20.0),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 2,
                                 child: Row(
@@ -244,22 +264,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     Padding(
-                                      padding: const EdgeInsets.all(10.0),
+                                      padding: const EdgeInsets.all(5.0),
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.end,
                                         children: [
                                           Column(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.end,
+                                                MainAxisAlignment.start,
                                             children: <Widget>[
                                               Container(
                                                 width: 400.0,
-                                                height: 200.0,
+                                                height: 300.0,
                                                 padding:
                                                     const EdgeInsets.all(5.0),
                                                 decoration: const BoxDecoration(
-                                                  color: Colors.grey,
+                                                  color: Color(0xFF1F3B4D),
                                                   boxShadow: [
                                                     BoxShadow(
                                                       color: Colors.grey,
@@ -281,225 +301,311 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       MainAxisAlignment.start,
                                                   children: <Widget>[
                                                     const Text(
-                                                        'Operator Input'),
-                                                    Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Container(
-                                                          height: 100.0,
-                                                          width: 190.0,
-                                                          color: Colors.white,
-                                                          child: Column(
+                                                      'Operator Input',
+                                                      style: TextStyle(
+                                                          color: Colors.white),
+                                                    ),
+                                                    Container(
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        children: <Widget>[
+                                                          Column(
                                                             children: [
-                                                              Row(
-                                                                children: [
-                                                                  const Text(
-                                                                      'Target GPM: '),
-                                                                  Text(
-                                                                      '$numbers'),
-                                                                  const SizedBox(
-                                                                      width:
-                                                                          10.0),
-                                                                  // const Divider(thickness: 2.0,color: Colors.black, height: 2.0),
-                                                                ],
-                                                              ),
-                                                              const SizedBox(
-                                                                  height: 3.0),
-                                                              const Divider(
-                                                                  thickness:
-                                                                      2.0,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  height: 2.0,
-                                                                  indent: 0,
-                                                                  endIndent: 0),
-                                                              const SizedBox(
-                                                                  height: 3.0),
-                                                              Row(
-                                                                children: const [
-                                                                  Text(
-                                                                      'Current GPM: '),
-                                                                ],
-                                                              ),
-                                                              const SizedBox(
-                                                                  height: 3.0),
-                                                              const Divider(
-                                                                  thickness:
-                                                                      2.0,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  height: 2.0,
-                                                                  indent: 0,
-                                                                  endIndent: 0),
-                                                              const SizedBox(
-                                                                  height: 3.0),
-                                                              Row(
-                                                                children: const [
-                                                                  Text(
-                                                                      'GPM Difference: '),
-                                                                ],
-                                                              ),
-                                                              const SizedBox(
-                                                                  height: 3.0),
-                                                              const Divider(
-                                                                  thickness:
-                                                                      2.0,
-                                                                  color: Colors
-                                                                      .black,
-                                                                  height: 2.0,
-                                                                  indent: 0,
-                                                                  endIndent: 0),
-                                                              const SizedBox(
-                                                                  height: 3.0),
-                                                              Row(
-                                                                children: const [
-                                                                  Text(
-                                                                      'Current GPM: '),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        const SizedBox(
-                                                          width: 10.0,
-                                                        ),
-                                                        SizedBox(
-                                                          height: 155.0,
-                                                          width: 190.0,
-                                                          child: Column(
-                                                            children: <Widget>[
-                                                              const Text(
-                                                                'Desired Reservoir Level',
-                                                                style: TextStyle(
-                                                                    fontSize:
-                                                                        15.0,
-                                                                    color: Colors
-                                                                        .white),
-                                                              ),
-                                                              TextFormField(
-                                                                // controller: _controllerReservoir,
-                                                                onChanged:
-                                                                    (value) {
-                                                                  url = value;
-                                                                  print(url);
-                                                                },
-                                                                style:
-                                                                    const TextStyle(
-                                                                  color: Colors
-                                                                      .black,
-                                                                ),
-                                                                decoration:
-                                                                    const InputDecoration(
-                                                                  filled: true,
-                                                                  fillColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  border:
-                                                                      UnderlineInputBorder(),
-                                                                  hintText:
-                                                                      'Desired Reservoir Level',
-                                                                  hintStyle: TextStyle(
-                                                                      color: Colors
-                                                                          .black),
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 15.0,
-                                                                child: Text(
-                                                                    'Current Reservoir Level',
-                                                                    style: TextStyle(
-                                                                        fontSize:
-                                                                            15.0,
+                                                              Container(
+                                                                height: 110.0,
+                                                                width: 190.0,
+                                                                color: Colors.white,
+                                                                child: Column(
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        const Text(
+                                                                            'Target GPM: '),
+                                                                        Text(
+                                                                            '$targetGpm'),
+                                                                        const SizedBox(
+                                                                            width:
+                                                                                10.0),
+                                                                        // const Divider(thickness: 2.0,color: Colors.black, height: 2.0),
+                                                                      ],
+                                                                    ),
+                                                                    const SizedBox(
+                                                                        height: 3.0),
+                                                                    const Divider(
+                                                                        thickness:
+                                                                            2.0,
                                                                         color: Colors
-                                                                            .white)),
-                                                              ),
-                                                              TextFormField(
-                                                                onChanged:
-                                                                    (value2) {
-                                                                  urls = value2;
-                                                                  print(urls);
-                                                                },
-                                                                style:
-                                                                    const TextStyle(
-                                                                  color: Colors
-                                                                      .black,
+                                                                            .black,
+                                                                        height: 2.0,
+                                                                        indent: 0,
+                                                                        endIndent: 0),
+                                                                    const SizedBox(
+                                                                        height: 3.0),
+                                                                    Row(
+                                                                      children: [
+                                                                        const Text(
+                                                                            'Gas Pumps GPM: '),
+                                                                        Text(
+                                                                            '$gPumpsGPM'),
+                                                                      ],
+                                                                    ),
+                                                                    const SizedBox(
+                                                                        height: 3.0),
+                                                                    const Divider(
+                                                                        thickness:
+                                                                            2.0,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        height: 2.0,
+                                                                        indent: 0,
+                                                                        endIndent: 0),
+                                                                    const SizedBox(
+                                                                        height: 3.0),
+                                                                    Row(
+                                                                      children: [
+                                                                        const Text(
+                                                                            'Electric Pumps: '),
+                                                                        Text(
+                                                                            '$ePumpsGPM'),
+                                                                      ],
+                                                                    ),
+                                                                    const SizedBox(
+                                                                        height: 3.0),
+                                                                    const Divider(
+                                                                        thickness:
+                                                                            2.0,
+                                                                        color: Colors
+                                                                            .black,
+                                                                        height: 2.0,
+                                                                        indent: 0,
+                                                                        endIndent: 0),
+                                                                    const SizedBox(
+                                                                        height: 3.0),
+                                                                    Row(
+                                                                      children: const [
+                                                                        Text(
+                                                                            'Total pump GPM: '),
+                                                                        // Text(
+                                                                        //     '$gasElectricCombo'),
+                                                                      ],
+                                                                    ),
+                                                                    const SizedBox(
+                                                                        height: 15.0)
+                                                                  ],
                                                                 ),
-                                                                decoration:
-                                                                    const InputDecoration(
-                                                                  filled: true,
-                                                                  fillColor:
-                                                                      Colors
-                                                                          .white,
-                                                                  border:
-                                                                      UnderlineInputBorder(),
-                                                                  hintText:
-                                                                      'Current Reservoir Level',
-                                                                  hintStyle: TextStyle(
-                                                                      fontSize:
-                                                                          15,
-                                                                      color: Colors
-                                                                          .black),
-                                                                ),
                                                               ),
-                                                              const SizedBox(
-                                                                height: 5.0,
+                                                              SizedBox(
+                                                                height: 10.0,
                                                               ),
-                                                              CalculateButton(
-                                                                color:
-                                                                    Colors.blue,
-                                                                onPressed:
-                                                                    () async {
-                                                                  data =
-                                                                      await fetchData(
-                                                                    urlCombine(
-                                                                        url,
-                                                                        urls),
-                                                                  );
-                                                                  output = data[
-                                                                      'output'];
-                                                                  numbers =
-                                                                      double.parse(
-                                                                          output.toString());
-                                                                  print(numbers
-                                                                      .runtimeType);
-                                                                  setState(() {
-                                                                    numbers;
-                                                                  });
-                                                                },
-                                                                width: 75.0,
-                                                                height: 30.0,
-                                                                text: 'Send',
-                                                              ),
+                                                              Container(
+                                                                height: 20.0,
+                                                                width: 20.0,
+                                                                color: Colors.white,
+
+                                                              )
                                                             ],
                                                           ),
-                                                        ),
-                                                      ],
+                                                          const SizedBox(
+                                                            width: 10.0,
+                                                          ),
+                                                          SizedBox(
+                                                            height: 155.0,
+                                                            width: 190.0,
+                                                            child: Column(
+                                                              children: <Widget>[
+                                                                const Text(
+                                                                  'Desired Reservoir Level',
+                                                                  style: TextStyle(
+                                                                      fontSize:
+                                                                          15.0,
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                                TextFormField(
+                                                                  // controller: _controllerReservoir,
+                                                                  onChanged:
+                                                                      (value) {
+                                                                    url = value;
+                                                                    print(url);
+                                                                  },
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                  decoration:
+                                                                      const InputDecoration(
+                                                                    filled: true,
+                                                                    fillColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    border:
+                                                                        UnderlineInputBorder(),
+                                                                    hintText:
+                                                                        'Desired Reservoir Level',
+                                                                    hintStyle: TextStyle(
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                  height: 15.0,
+                                                                  child: Text(
+                                                                      'Current Reservoir Level',
+                                                                      style: TextStyle(
+                                                                          fontSize:
+                                                                              15.0,
+                                                                          color: Colors
+                                                                              .white)),
+                                                                ),
+                                                                TextFormField(
+                                                                  onChanged:
+                                                                      (value2) {
+                                                                    urls = value2;
+                                                                    print(urls);
+                                                                  },
+                                                                  style:
+                                                                      const TextStyle(
+                                                                    color: Colors
+                                                                        .black,
+                                                                  ),
+                                                                  decoration:
+                                                                      const InputDecoration(
+                                                                    filled: true,
+                                                                    fillColor:
+                                                                        Colors
+                                                                            .white,
+                                                                    border:
+                                                                        UnderlineInputBorder(),
+                                                                    hintText:
+                                                                        'Current Reservoir Level',
+                                                                    hintStyle: TextStyle(
+                                                                        fontSize:
+                                                                            15,
+                                                                        color: Colors
+                                                                            .black),
+                                                                  ),
+                                                                ),
+                                                                const SizedBox(
+                                                                  height: 5.0,
+                                                                ),
+                                                                CalculateButton(
+                                                                  color:
+                                                                      Colors.blue,
+                                                                  onPressed:
+                                                                      () async {
+                                                                    data =
+                                                                        await fetchData(
+                                                                      urlCombine(
+                                                                          url,
+                                                                          urls),
+                                                                    );
+                                                                    targetGpm = data[
+                                                                        'target gpm'];
+                                                                    electricPumps =
+                                                                        data[
+                                                                            'electric pumps'];
+                                                                    // gasPumps = data[
+                                                                    //     'gas pumps'];
+                                                                    // combined = data[
+                                                                    //     'combined gpm'];
+                                                                    gPMTarget =
+                                                                        double
+                                                                            .parse(
+                                                                      targetGpm
+                                                                          .toString(),
+                                                                    );
+                                                                    ePumpsGPM =
+                                                                        double
+                                                                            .parse(
+                                                                      electricPumps
+                                                                          .toString(),
+                                                                    );
+                                                                    // gPumpsGPM =
+                                                                    //     double
+                                                                    //         .parse(
+                                                                    //   gasPumps
+                                                                    //       .toString(),
+                                                                    // );
+                                                                    // gasElectricCombo =
+                                                                    //     double
+                                                                    //         .parse(
+                                                                    //   combined
+                                                                    //       .toString(),
+                                                                    // );
+                                                                    // data =
+                                                                    //     await fetchData(
+                                                                    //   urlCombine(
+                                                                    //       url,
+                                                                    //       urls),
+                                                                    // );
+                                                                    // output = data[
+                                                                    //     'output'];
+                                                                    // numbers =
+                                                                    //     double.parse(
+                                                                    //         output.toString());
+                                                                    // print(numbers
+                                                                    //     .runtimeType);
+                                                                    setState(() {
+                                                                      targetGpm;
+                                                                      ePumpsGPM;
+                                                                      // gPumpsGPM;
+                                                                      // gasElectricCombo;
+                                                                    });
+                                                                  },
+                                                                  width: 75.0,
+                                                                  height: 30.0,
+                                                                  text: 'Send',
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
                                                     ),
                                                   ],
                                                 ),
                                               ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(8.0),
-                                                child: Container(
-                                                  height: 70,
-                                                  width: 390,
-                                                  color: Colors.white,
-                                                  child: Column(
-                                                    children: <Widget>[
-                                                      Row(
-                                                        children: const <
-                                                            Widget>[
-                                                          Text(
-                                                              'Reservoir Actions'),
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ),
+                                              // Padding(
+                                              //   padding:
+                                              //       const EdgeInsets.all(8.0),
+                                              //   child: Container(
+                                              //     height: 70,
+                                              //     width: 390,
+                                              //     color:
+                                              //         const Color(0xFF1F3B4D),
+                                              //     child: Padding(
+                                              //       padding: const EdgeInsets.all(8.0),
+                                              //       child: Column(
+                                              //         children: <Widget>[
+                                              //           Row(
+                                              //             children: const <
+                                              //                 Widget>[
+                                              //               Text(
+                                              //                 'Reservoir Actions:',
+                                              //                 style: TextStyle(
+                                              //                     color: Colors
+                                              //                         .white),
+                                              //               ),
+                                              //             ],
+                                              //           ),
+                                              //           Row(
+                                              //             children: <Widget>[
+                                              //               Text(
+                                              //                 '$actionMessage',
+                                              //                 style: const TextStyle(
+                                              //                     color: Colors
+                                              //                         .white),
+                                              //               ),
+                                              //             ],
+                                              //           ),
+                                              //         ],
+                                              //       ),
+                                              //     ),
+                                              //   ),
+                                              // ),
                                             ],
                                           ),
                                         ],
@@ -642,7 +748,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     height: 30.0,
                                     width: 450.0,
                                     child: TextFormField(
-                                      controller: messageController,
+                                      // controller: messageController,
                                       onChanged: (value) {
                                         setState(() {
                                           messageText = value;
