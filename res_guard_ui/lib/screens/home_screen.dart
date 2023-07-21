@@ -32,9 +32,13 @@ class _HomeScreenState extends State<HomeScreen> {
   String combined = 'Total GPM required';
   double gasElectricCombo = 0;
   String actionMessage = 'Reservoir action pending...';
+  double combinedGPM = 0;
+  double combo = 0;
+  var pumpPositions;
   // final messageController = TextEditingController();
   String? messageText;
   var height = 40.0;
+  Color textColor = Colors.red;
 
   fetchData(String url) async {
     http.Response response = await http.get(Uri.parse(url));
@@ -206,8 +210,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                     Padding(
                                       padding: const EdgeInsets.all(8.0),
                                       child: Row(
-                                        children: const [
-                                          Text('Finished Water GPM :'),
+                                        children: [
+                                          const Text('Finished Water GPM :'),
+                                          Text('$combo'),
                                         ],
                                       ),
                                     ),
@@ -237,430 +242,139 @@ class _HomeScreenState extends State<HomeScreen> {
                               const SizedBox(height: 20.0),
                               SizedBox(
                                 width: MediaQuery.of(context).size.width / 2,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: <Widget>[
-                                    Container(
-                                      alignment:
-                                          AlignmentDirectional.bottomCenter,
-                                      height: 300.0,
-                                      width: 220.0,
-                                      decoration: const BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.only(
-                                          topRight: Radius.circular(22.0),
-                                          topLeft: Radius.circular(22.0),
-                                        ),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: <Widget>[
-                                          AnimatedContainer(
-                                            height: height,
-                                            duration:
-                                                const Duration(seconds: 3),
-                                            color: Colors.blue,
-                                          )
-                                        ],
-                                      ),
+                                height: 325.0,
+                                child: Material(
+                                  elevation: 50.0,
+                                  child: Container(
+                                    width:
+                                        MediaQuery.of(context).size.width / 2.1,
+                                    height: MediaQuery.of(context).size.height /
+                                        2.0,
+                                    decoration: const BoxDecoration(
+                                      color: Colors.blueGrey,
+                                      boxShadow: [
+                                        BoxShadow(blurRadius: 25.0),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(5.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.end,
-                                        children: [
-                                          Column(
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          height: 300.0,
+                                          width: 300.0,
+                                          color: Colors.white,
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.end,
+                                            children: <Widget>[
+                                              AnimatedContainer(
+                                                color: Colors.blue,
+                                                height: height,
+                                                duration: const Duration(
+                                                    seconds: 3),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                        Container(
+                                          height: 300.0,
+                                          width: 300.0,
+                                          color: Colors.white,
+                                          child: Row(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
                                             children: <Widget>[
                                               Container(
-                                                width: 400.0,
-                                                height: 300.0,
-                                                padding:
-                                                    const EdgeInsets.all(5.0),
-                                                decoration: const BoxDecoration(
-                                                  color: Color(0xFF1F3B4D),
-                                                  boxShadow: [
-                                                    BoxShadow(
-                                                      color: Colors.grey,
-                                                      offset: Offset(4.0, 4.0),
-                                                      blurRadius: 15.0,
-                                                      spreadRadius: 1.0,
-                                                    ),
-                                                    BoxShadow(
-                                                      color: Colors.black,
-                                                      offset:
-                                                          Offset(-4.0, -4.0),
-                                                      blurRadius: 15.0,
-                                                      spreadRadius: 1.0,
-                                                    ),
-                                                  ],
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                      color: Colors.black),
                                                 ),
                                                 child: Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: <Widget>[
-                                                    const Text(
-                                                      'Operator Input',
-                                                      style: TextStyle(
-                                                          color: Colors.white),
-                                                    ),
+                                                  children: [
                                                     Container(
                                                       child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        children: <Widget>[
-                                                          Column(
-                                                            children: [
-                                                              Container(
-                                                                height: 110.0,
-                                                                width: 190.0,
-                                                                color: Colors
-                                                                    .white,
-                                                                child: Column(
-                                                                  children: [
-                                                                    Row(
-                                                                      children: [
-                                                                        const Text(
-                                                                            'Target GPM: '),
-                                                                        Text(
-                                                                            '$targetGpm'),
-                                                                        const SizedBox(
-                                                                            width:
-                                                                                10.0),
-                                                                        // const Divider(thickness: 2.0,color: Colors.black, height: 2.0),
-                                                                      ],
-                                                                    ),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            3.0),
-                                                                    const Divider(
-                                                                        thickness:
-                                                                            2.0,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        height:
-                                                                            2.0,
-                                                                        indent:
-                                                                            0,
-                                                                        endIndent:
-                                                                            0),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            3.0),
-                                                                    Row(
-                                                                      children: [
-                                                                        const Text(
-                                                                            'Gas Pumps GPM: '),
-                                                                        Text(
-                                                                            '$gPumpsGPM'),
-                                                                      ],
-                                                                    ),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            3.0),
-                                                                    const Divider(
-                                                                        thickness:
-                                                                            2.0,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        height:
-                                                                            2.0,
-                                                                        indent:
-                                                                            0,
-                                                                        endIndent:
-                                                                            0),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            3.0),
-                                                                    Row(
-                                                                      children: [
-                                                                        const Text(
-                                                                            'Electric Pumps: '),
-                                                                        Text(
-                                                                            '$ePumpsGPM'),
-                                                                      ],
-                                                                    ),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            3.0),
-                                                                    const Divider(
-                                                                        thickness:
-                                                                            2.0,
-                                                                        color: Colors
-                                                                            .black,
-                                                                        height:
-                                                                            2.0,
-                                                                        indent:
-                                                                            0,
-                                                                        endIndent:
-                                                                            0),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            3.0),
-                                                                    Row(
-                                                                      children: const [
-                                                                        Text(
-                                                                            'Total pump GPM: '),
-                                                                        // Text(
-                                                                        //     '$gasElectricCombo'),
-                                                                      ],
-                                                                    ),
-                                                                    const SizedBox(
-                                                                        height:
-                                                                            15.0)
-                                                                  ],
-                                                                ),
-                                                              ),
-                                                              const SizedBox(
-                                                                height: 10.0,
-                                                              ),
-                                                              Container(
-                                                                height: 130.0,
-                                                                width: 190.0,
-                                                                color: Colors
-                                                                    .white,
-                                                                child: Column(
-                                                                  children: <
-                                                                      Widget>[
-                                                                    Row(
-                                                                      children: const <
-                                                                          Widget>[
-                                                                        Text(
-                                                                            'Reservoir Actions: '),
-                                                                      ],
-                                                                    ),
-                                                                    Padding(
-                                                                      padding: const EdgeInsets.all(8.0),
-                                                                      child: Text(
-                                                                          '$actionMessage'),
-                                                                    ),
-                                                                  ],
-                                                                ),
-                                                              )
-                                                            ],
-                                                          ),
+                                                        children: [
+                                                          const Text(
+                                                              'Target GPM: '),
+                                                          Text('$targetGpm'),
                                                           const SizedBox(
-                                                            width: 10.0,
-                                                          ),
-                                                          SizedBox(
-                                                            height: 155.0,
-                                                            width: 190.0,
-                                                            child: Column(
-                                                              children: <
-                                                                  Widget>[
-                                                                const Text(
-                                                                  'Desired Reservoir Level',
-                                                                  style: TextStyle(
-                                                                      fontSize:
-                                                                          15.0,
-                                                                      color: Colors
-                                                                          .white),
-                                                                ),
-                                                                TextFormField(
-                                                                  // controller: _controllerReservoir,
-                                                                  onChanged:
-                                                                      (value) {
-                                                                    url = value;
-                                                                    print(url);
-                                                                  },
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                  ),
-                                                                  decoration:
-                                                                      const InputDecoration(
-                                                                    filled:
-                                                                        true,
-                                                                    fillColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    border:
-                                                                        UnderlineInputBorder(),
-                                                                    hintText:
-                                                                        'Desired Reservoir Level',
-                                                                    hintStyle: TextStyle(
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                                const SizedBox(
-                                                                  height: 15.0,
-                                                                  child: Text(
-                                                                      'Current Reservoir Level',
-                                                                      style: TextStyle(
-                                                                          fontSize:
-                                                                              15.0,
-                                                                          color:
-                                                                              Colors.white)),
-                                                                ),
-                                                                TextFormField(
-                                                                  onChanged:
-                                                                      (value2) {
-                                                                    urls =
-                                                                        value2;
-                                                                    print(urls);
-                                                                  },
-                                                                  style:
-                                                                      const TextStyle(
-                                                                    color: Colors
-                                                                        .black,
-                                                                  ),
-                                                                  decoration:
-                                                                      const InputDecoration(
-                                                                    filled:
-                                                                        true,
-                                                                    fillColor:
-                                                                        Colors
-                                                                            .white,
-                                                                    border:
-                                                                        UnderlineInputBorder(),
-                                                                    hintText:
-                                                                        'Current Reservoir Level',
-                                                                    hintStyle: TextStyle(
-                                                                        fontSize:
-                                                                            15,
-                                                                        color: Colors
-                                                                            .black),
-                                                                  ),
-                                                                ),
-                                                                const SizedBox(
-                                                                  height: 5.0,
-                                                                ),
-                                                                CalculateButton(
-                                                                  color: Colors
-                                                                      .blue,
-                                                                  onPressed:
-                                                                      () async {
-                                                                    data =
-                                                                        await fetchData(
-                                                                      urlCombine(
-                                                                          url,
-                                                                          urls),
-                                                                    );
-                                                                    actionMessage =
-                                                                        data[
-                                                                            'reservoir message'];
-                                                                    targetGpm =
-                                                                        data[
-                                                                            'target gpm'];
-                                                                    electricPumps =
-                                                                        data[
-                                                                            'electric pumps'];
-                                                                    gasPumps = data[
-                                                                        'gas pumps'];
-                                                                    // combined = data[
-                                                                    //     'combined gpm'];
-                                                                    gPMTarget =
-                                                                        double
-                                                                            .parse(
-                                                                      targetGpm
-                                                                          .toString(),
-                                                                    );
-                                                                    ePumpsGPM =
-                                                                        double
-                                                                            .parse(
-                                                                      electricPumps
-                                                                          .toString(),
-                                                                    );
-                                                                    gPumpsGPM =
-                                                                        double
-                                                                            .parse(
-                                                                      gasPumps
-                                                                          .toString(),
-                                                                    );
-                                                                    // gasElectricCombo =
-                                                                    //     double
-                                                                    //         .parse(
-                                                                    //   combined
-                                                                    //       .toString(),
-                                                                    // );
-                                                                    // data =
-                                                                    //     await fetchData(
-                                                                    //   urlCombine(
-                                                                    //       url,
-                                                                    //       urls),
-                                                                    // );
-                                                                    // output = data[
-                                                                    //     'output'];
-                                                                    // numbers =
-                                                                    //     double.parse(
-                                                                    //         output.toString());
-                                                                    // print(numbers
-                                                                    //     .runtimeType);
-                                                                    setState(
-                                                                        () {
-                                                                      targetGpm;
-                                                                      ePumpsGPM;
-                                                                      gPumpsGPM;
-                                                                      actionMessage;
-
-                                                                      // gPumpsGPM;
-                                                                      // gasElectricCombo;
-                                                                    });
-                                                                  },
-                                                                  width: 75.0,
-                                                                  height: 30.0,
-                                                                  text: 'Send',
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
+                                                              width: 10.0),
+// const Divider(thickness: 2.0,color: Colors.black, height: 2.0),
                                                         ],
                                                       ),
                                                     ),
+                                                    const SizedBox(height: 3.0),
+                                                    const Divider(
+                                                        thickness: 2.0,
+                                                        color: Colors.black,
+                                                        height: 2.0,
+                                                        indent: 0,
+                                                        endIndent: 0),
+                                                    const SizedBox(height: 3.0),
+                                                    Container(
+                                                      child: Row(
+                                                        children: [
+                                                          const Text(
+                                                              'Gas Pumps GPM: '),
+                                                          Text('$gPumpsGPM'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 3.0),
+                                                    const Divider(
+                                                        thickness: 2.0,
+                                                        color: Colors.black,
+                                                        height: 2.0,
+                                                        indent: 0,
+                                                        endIndent: 0),
+                                                    const SizedBox(height: 3.0),
+                                                    Container(
+                                                      child: Row(
+                                                        children: [
+                                                          const Text(
+                                                              'Electric Pumps: '),
+                                                          Text('$ePumpsGPM'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 3.0),
+                                                    const Divider(
+                                                        thickness: 2.0,
+                                                        color: Colors.black,
+                                                        height: 2.0,
+                                                        indent: 0,
+                                                        endIndent: 0),
+                                                    const SizedBox(height: 3.0),
+                                                    Container(
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                            color:
+                                                                Colors.black),
+                                                      ),
+                                                      child: Row(
+                                                        children: const [
+                                                          Text(
+                                                              'Total pump GPM: '),
+// Text(
+//     '$gasElectricCombo'),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                    const SizedBox(height: 15.0)
                                                   ],
                                                 ),
                                               ),
-                                              // Padding(
-                                              //   padding:
-                                              //       const EdgeInsets.all(8.0),
-                                              //   child: Container(
-                                              //     height: 70,
-                                              //     width: 390,
-                                              //     color:
-                                              //         const Color(0xFF1F3B4D),
-                                              //     child: Padding(
-                                              //       padding: const EdgeInsets.all(8.0),
-                                              //       child: Column(
-                                              //         children: <Widget>[
-                                              //           Row(
-                                              //             children: const <
-                                              //                 Widget>[
-                                              //               Text(
-                                              //                 'Reservoir Actions:',
-                                              //                 style: TextStyle(
-                                              //                     color: Colors
-                                              //                         .white),
-                                              //               ),
-                                              //             ],
-                                              //           ),
-                                              //           Row(
-                                              //             children: <Widget>[
-                                              //               Text(
-                                              //                 '$actionMessage',
-                                              //                 style: const TextStyle(
-                                              //                     color: Colors
-                                              //                         .white),
-                                              //               ),
-                                              //             ],
-                                              //           ),
-                                              //         ],
-                                              //       ),
-                                              //     ),
-                                              //   ),
-                                              // ),
+                                              const SizedBox(
+                                                height: 10.0,
+                                              ),
+                                              const SizedBox(
+                                                width: 10.0,
+                                              ),
                                             ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
                             ],
@@ -835,50 +549,102 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
-// Padding(
-// padding: const EdgeInsets.all(8.0),
+// Material(
+// elevation: 50.0,
+// child: Container(
+// width: MediaQuery.of(context).size.width / 2.1,
+// height: MediaQuery.of(context).size.height / 2.0,
+// decoration: const BoxDecoration(
+// color: Colors.blueGrey,
+// boxShadow: [
+// BoxShadow(blurRadius: 25.0),
+// ],
+// ),
+// child: Column(
+// crossAxisAlignment: CrossAxisAlignment.start,
+// children: <Widget>[
+// Row(
+// children: <Widget>[
+// Container(
+// height: 350.0,
+// width: 50.0,
+// color: const Color(0xFF032654),
+// child: ListView.builder(
+// itemCount: 8,
+// itemBuilder:
+// (BuildContext context, int index) {
+// return IconButton(
+// onPressed: () {
+// setState(() {
+// height = 100;
+// });
+// print('clicked');
+// },
+// icon: const Icon(
+// Icons.person,
+// color: Colors.white,
+// ),
+// );
+// },
+// ),
+// ),
+// Container(
+// height: 350.0,
+// width: 250.0,
+// color: const Color(0xFF1F3B4D),
+// child: ListView.builder(
+// itemCount: 8,
+// itemBuilder:
+// (BuildContext context, int index) {
+// return ContactCard();
+// },
+// ),
+// ),
+// Container(
+// height: 350.0,
+// width: 351.0,
+// color: const Color(0xFF1E1F21),
 // child: Column(
 // mainAxisAlignment: MainAxisAlignment.start,
-// children: <Widget>[
-// const Text(
-// 'Message Center',
-// style: TextStyle(fontSize: 20),
-// ),
-// const SizedBox(
-// height: 10.0,
-// ),
+// children: [
 // Row(
 // mainAxisAlignment:
-// MainAxisAlignment.spaceEvenly,
-// children: [
-// Container(
-// width: 250.0,
-// height: 300.0,
-// child: ListWheelScrollView(
-// controller: FixedExtentScrollController(),
-// itemExtent: 100,
+// MainAxisAlignment.center,
 // children: const <Widget>[
-// ContactCard(),
-// ContactCard(),
-// ContactCard(),
-// ContactCard(),
+// Text(
+// 'Message Center',
+// style:
+// TextStyle(color: Colors.white),
+// ),
+// ],
+// ),
+// messageText == null
+// ? const Text(' ')
+//     : Text(
+// '$messageText'!,
+// style: const TextStyle(
+// color: Colors.white),
+// )
 // ],
 // ),
 // ),
-// Column(
-// children: [
-// Container(
-// width: 300,
-// height: 300,
-// alignment:
-// AlignmentDirectional.bottomCenter,
-// decoration: const BoxDecoration(
-// borderRadius: BorderRadius.all(
-// Radius.circular(20)),
-// shape: BoxShape.rectangle,
-// color: Colors.white,
+// ],
 // ),
+// Row(
+// mainAxisAlignment: MainAxisAlignment.center,
+// children: <Widget>[
+// Padding(
+// padding: const EdgeInsets.all(8.0),
+// child: Container(
+// height: 30.0,
+// width: 450.0,
 // child: TextFormField(
+// // controller: messageController,
+// onChanged: (value) {
+// setState(() {
+// messageText = value;
+// });
+// },
 // style: const TextStyle(
 // color: Colors.black,
 // ),
@@ -886,67 +652,574 @@ class _HomeScreenState extends State<HomeScreen> {
 // filled: true,
 // fillColor: Colors.white,
 // border: UnderlineInputBorder(),
-// hintText:
-// 'Type your message here...',
+// hintText: 'Type your message here...',
 // hintStyle:
 // TextStyle(color: Colors.black),
 // ),
 // ),
 // ),
-// Row(
+// ),
+// ],
+// ),
+// ],
+// ),
+// ),
+// ),
+
+// Container(
+// decoration: const BoxDecoration(
+// color: Color(0xFF1F3B4D),
+// borderRadius: BorderRadius.all(
+// Radius.circular(22),
+// ),
+// ),
+// child: Row(
+// mainAxisAlignment:
+// MainAxisAlignment.spaceEvenly,
+// children: <Widget>[
+// Container(
+// alignment:
+// AlignmentDirectional.bottomCenter,
+// height: 300.0,
+// width: 220.0,
+// decoration: const BoxDecoration(
+// color: Colors.white,
+// borderRadius: BorderRadius.all(
+// Radius.circular(22),
+// ),
+// ),
+// child: Column(
 // mainAxisAlignment:
 // MainAxisAlignment.end,
+// children: <Widget>[
+// AnimatedContainer(
+// color: Colors.blue,
+// height: height,
+// duration:
+// const Duration(seconds: 3),
+// )
+// ],
+// ),
+// ),
+// Padding(
+// padding: const EdgeInsets.all(10.0),
+// child: Row(
+// mainAxisAlignment:
+// MainAxisAlignment.end,
+// children: <Widget>[
+// Column(
+// mainAxisAlignment:
+// MainAxisAlignment.start,
+// children: <Widget>[
+// Container(
+// width: 400.0,
+// height: 300.0,
+// padding:
+// const EdgeInsets.all(5.0),
+// decoration:
+// const BoxDecoration(
+// color: Color(0xFF1F3B4D),
+// borderRadius:
+// BorderRadius.all(
+// Radius.circular(22),
+// ),
+// boxShadow: [
+// BoxShadow(
+// color: Colors.grey,
+// offset:
+// Offset(4.0, 4.0),
+// blurRadius: 15.0,
+// spreadRadius: 1.0,
+// ),
+// BoxShadow(
+// color: Colors.black,
+// offset:
+// Offset(-4.0, -4.0),
+// blurRadius: 15.0,
+// spreadRadius: 1.0,
+// ),
+// ],
+// ),
+// child: Column(
+// mainAxisAlignment:
+// MainAxisAlignment.start,
+// children: <Widget>[
+// const Padding(
+// padding:
+// EdgeInsets.all(8.0),
+// child: Text(
+// 'Operator Input',
+// style: TextStyle(
+// color:
+// Colors.white),
+// ),
+// ),
+// Container(
+// child: Row(
+// mainAxisAlignment:
+// MainAxisAlignment
+//     .start,
+// children: <Widget>[
+// Column(
 // children: [
+// Container(
+// height: 110.0,
+// width: 190.0,
+// color: Colors
+//     .white,
+// child: Column(
+// children: [
+// Row(
+// children: [
+// const Text(
+// 'Target GPM: '),
+// Text(
+// '$targetGpm'),
+// const SizedBox(
+// width: 10.0),
+// // const Divider(thickness: 2.0,color: Colors.black, height: 2.0),
+// ],
+// ),
+// const SizedBox(
+// height:
+// 3.0),
+// const Divider(
+// thickness:
+// 2.0,
+// color: Colors
+//     .black,
+// height:
+// 2.0,
+// indent:
+// 0,
+// endIndent:
+// 0),
+// const SizedBox(
+// height:
+// 3.0),
+// Row(
+// children: [
+// const Text(
+// 'Gas Pumps GPM: '),
+// Text(
+// '$gPumpsGPM'),
+// ],
+// ),
+// const SizedBox(
+// height:
+// 3.0),
+// const Divider(
+// thickness:
+// 2.0,
+// color: Colors
+//     .black,
+// height:
+// 2.0,
+// indent:
+// 0,
+// endIndent:
+// 0),
+// const SizedBox(
+// height:
+// 3.0),
+// Row(
+// children: [
+// const Text(
+// 'Electric Pumps: '),
+// Text(
+// '$ePumpsGPM'),
+// ],
+// ),
+// const SizedBox(
+// height:
+// 3.0),
+// const Divider(
+// thickness:
+// 2.0,
+// color: Colors
+//     .black,
+// height:
+// 2.0,
+// indent:
+// 0,
+// endIndent:
+// 0),
+// const SizedBox(
+// height:
+// 3.0),
+// Row(
+// children: const [
+// Text(
+// 'Total pump GPM: '),
+// // Text(
+// //     '$gasElectricCombo'),
+// ],
+// ),
+// const SizedBox(
+// height:
+// 15.0)
+// ],
+// ),
+// ),
+// const SizedBox(
+// height: 10.0,
+// ),
+// Container(
+// height: 130.0,
+// width: 190.0,
+// color: Colors
+//     .white,
+// child: Column(
+// children: <
+// Widget>[
+// Row(
+// children: const <
+// Widget>[
+// Text(
+// 'Reservoir Actions: '),
+// ],
+// ),
+// Padding(
+// padding:
+// const EdgeInsets.all(8.0),
+// child: Text(
+// '$actionMessage'),
+// ),
+// Text(
+// '$pumpPositions')
+// ],
+// ),
+// )
+// ],
+// ),
+// const SizedBox(
+// width: 10.0,
+// ),
+// SizedBox(
+// height: 155.0,
+// width: 190.0,
+// child: Container(
+// child: Column(
+// children: <
+// Widget>[
+// const Text(
+// 'Desired Reservoir Level',
+// style: TextStyle(
+// fontSize:
+// 15.0,
+// color:
+// Colors.white),
+// ),
+// TextFormField(
+// // controller: _controllerReservoir,
+// onChanged:
+// (value) {
+// url =
+// value;
+// print(
+// url);
+// },
+// style:
+// const TextStyle(
+// color: Colors
+//     .black,
+// ),
+// decoration:
+// const InputDecoration(
+// filled:
+// true,
+// fillColor:
+// Colors.white,
+// border:
+// UnderlineInputBorder(),
+// hintText:
+// 'Desired Reservoir Level',
+// hintStyle:
+// TextStyle(color: Colors.black),
+// ),
+// ),
+// const SizedBox(
+// height:
+// 15.0,
+// child: Text(
+// 'Current Reservoir Level',
+// style: TextStyle(
+// fontSize: 15.0,
+// color: Colors.white)),
+// ),
+// TextFormField(
+// onChanged:
+// (value2) {
+// urls =
+// value2;
+// print(
+// urls);
+// },
+// style:
+// const TextStyle(
+// color: Colors
+//     .black,
+// ),
+// decoration:
+// const InputDecoration(
+// filled:
+// true,
+// fillColor:
+// Colors.white,
+// border:
+// UnderlineInputBorder(),
+// hintText:
+// 'Current Reservoir Level',
+// hintStyle: TextStyle(
+// fontSize:
+// 15,
+// color:
+// Colors.black),
+// ),
+// ),
+// const SizedBox(
+// height:
+// 5.0,
+// ),
+// CalculateButton(
+// color: Colors
+//     .blue,
+// onPressed:
+// () async {
+// data =
+// await fetchData(
+// urlCombine(
+// url,
+// urls),
+// );
+// actionMessage =
+// data['reservoir message'];
+// // pumpPositions =
+// //     data['gas speeds'];
+// targetGpm =
+// data['target gpm'];
+// electricPumps =
+// data['electric pumps'];
+// // gasPumps =
+// //     data['gas pumps'];
+// combinedGPM =
+// data['combined gpm'];
+// combinedGPM =
+// data['combined gpm'];
+// gPMTarget =
+// double.parse(
+// targetGpm
+//     .toString(),
+// );
+// ePumpsGPM =
+// double.parse(
+// electricPumps
+//     .toString(),
+// );
+// // gPumpsGPM =
+// //     List.parse(
+// //
+// //       .toString(),
+// // );
+// combo =
+// double.parse(
+// combinedGPM
+//     .toString(),
+// );
+// setState(
+// () {
+// targetGpm;
+// ePumpsGPM;
+// gPumpsGPM;
+// actionMessage;
+// combo;
+// // pumpPositions;
+//
+// // gPumpsGPM;
+// // gasElectricCombo;
+// });
+// },
+// width:
+// 75.0,
+// height:
+// 30.0,
+// text:
+// 'Send',
+// ),
+// ],
+// ),
+// ),
+// ),
+// ],
+// ),
+// ),
+// ],
+// ),
+// ),
+// ],
+// ),
+// ],
+// ),
+// ),
+// ],
+// ),
+// )
+
+// Container(
+// child: Column(
+// children: <Widget>[
+// const Text(
+// 'Desired Reservoir Level',
+// style: TextStyle(
+// fontSize: 15.0,
+// color:
+// Colors.white),
+// ),
+// TextFormField(
+// // controller: _controllerReservoir,
+// onChanged: (value) {
+// url = value;
+// print(url);
+// },
+// style:
+// const TextStyle(
+// color: Colors.black,
+// ),
+// decoration:
+// const InputDecoration(
+// filled: true,
+// fillColor:
+// Colors.white,
+// border:
+// UnderlineInputBorder(),
+// hintText:
+// 'Desired Reservoir Level',
+// hintStyle: TextStyle(
+// color: Colors
+//     .black),
+// ),
+// ),
+// const SizedBox(
+// height: 15.0,
+// child: Text(
+// 'Current Reservoir Level',
+// style: TextStyle(
+// fontSize:
+// 15.0,
+// color: Colors
+//     .white)),
+// ),
+// TextFormField(
+// onChanged: (value2) {
+// urls = value2;
+// print(urls);
+// },
+// style:
+// const TextStyle(
+// color: Colors.black,
+// ),
+// decoration:
+// const InputDecoration(
+// filled: true,
+// fillColor:
+// Colors.white,
+// border:
+// UnderlineInputBorder(),
+// hintText:
+// 'Current Reservoir Level',
+// hintStyle: TextStyle(
+// fontSize: 15,
+// color: Colors
+//     .black),
+// ),
+// ),
+// const SizedBox(
+// height: 5.0,
+// ),
 // CalculateButton(
 // color: Colors.blue,
 // onPressed: () async {
-// print('clicked');
+// data =
+// await fetchData(
+//     urlCombine(
+//         url, urls),
+//     );
+// actionMessage = data[
+// 'reservoir message'];
+// // pumpPositions =
+// //     data['gas speeds'];
+// targetGpm = data[
+// 'target gpm'];
+// electricPumps = data[
+// 'electric pumps'];
+// // gasPumps =
+// //     data['gas pumps'];
+// combinedGPM = data[
+// 'combined gpm'];
+// combinedGPM = data[
+// 'combined gpm'];
+// gPMTarget =
+// double.parse(
+// targetGpm
+//     .toString(),
+// );
+// ePumpsGPM =
+// double.parse(
+// electricPumps
+//     .toString(),
+// );
+// // gPumpsGPM =
+// //     List.parse(
+// //
+// //       .toString(),
+// // );
+// combo =
+// double.parse(
+// combinedGPM
+//     .toString(),
+// );
+// setState(() {
+// targetGpm;
+// ePumpsGPM;
+// gPumpsGPM;
+// actionMessage;
+// combo;
+// // pumpPositions;
+//
+// // gPumpsGPM;
+// // gasElectricCombo;
+// });
 // },
-// width: 100.0,
-// height: 100.0,
+// width: 75.0,
+// height: 30.0,
 // text: 'Send',
 // ),
 // ],
 // ),
-// ],
-// ),
-// ],
-// ),
-// // Row(
-// //   mainAxisAlignment:
-// //   MainAxisAlignment.end,
-// //   children: [
-// //     CalculateButton(
-// //       color: Colors.blue,
-// //       onPressed: () async {
-// //         print('clicked');
-// //       },
-// //       width: 100.0,
-// //       height: 100.0,
-// //       text: 'Send',
-// //     ),
-// //   ],
-// // ),
-// ],
-// ),
 // ),
 
-// IconButton(
-// onPressed: () {
-// print('clicked');
-// },
-// icon: const Icon(
-// Icons.person,
-// color: Colors.white,
-// ),
-// ),
 // Container(
-// height: 200.0,
-// width: 130.0,
-// child: const ReservoirDisplay(
-// feet: 20.0,
-// maxFeet: 30.0,
-// currentTrajectory: 24.0,
-// forecastTrajectory: 25,
+// height: 130.0,
+// width: 190.0,
+// color: Colors.white,
+// child: Column(
+// children: <Widget>[
+// Row(
+// mainAxisAlignment: MainAxisAlignment.start,
+// children: const <
+// Widget>[
+// Text(
+// 'Reservoir Actions: '),
+// ],
+// ),
+// Padding(
+// padding:
+// const EdgeInsets
+//     .all(8.0),
+// child: Text(
+// '$actionMessage'),
+// ),
+// Text('$pumpPositions')
+// ],
 // ),
 // ),
